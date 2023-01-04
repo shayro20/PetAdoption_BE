@@ -1,26 +1,29 @@
 const express = require("express");
 const {v4: uuid} = require("uuid");
-//const {addPet, readAllPets, deletePet} = require("../models/petModels");
+const validateBody = require("../validate/validate");
+const schema = require("../schema/petSchema");
 const PetController = require("../controllers/petController");
 const router = express.Router();
 
 //Add validation middleware
-router.post("/", (req, res) => PetController.newPet(req, res));
-
+// , upload.single("picture")
+router.post("/", validateBody(schema), (req, res) =>
+  PetController.newPet(req, res)
+);
 router.get("/", (req, res) => PetController.searchPets(req, res));
 
-router.get("/pets/:id");
+router.get("/:id", PetController.idPet);
 
-router.put("/pets/:id");
+router.put("/:id", PetController.editPet);
 
-router.post("/pets/:id/adopt");
+router.post("/:id/adopt", PetController.adoptPet);
 
-router.post("/pets/:id/return");
+router.post("/:id/return");
 
-router.post("/pets/:id/save");
+router.post("/:id/save");
 
-router.delete("/pets/:id/save");
+router.delete("/:id/save");
 
-router.get("/pet/user/:id");
+router.get("/user/:id");
 
 module.exports = router;

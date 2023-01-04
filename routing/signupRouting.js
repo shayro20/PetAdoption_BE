@@ -1,7 +1,13 @@
 const express = require("express");
-const {v4: uuid} = require("uuid");
 const router = express.Router();
+const userController = require("../controllers/userControler");
+const validateBody = require("../validate/validate");
+const {signUpSchema} = require("../schema/userSchema");
 
-router.post("/",)
+const {cryptPass, isUser} = require("../middleware/userMid");
+
+router.post("/", validateBody(signUpSchema), cryptPass, (req, res) =>
+  userController.signUp(req, res)
+);
 
 module.exports = router;

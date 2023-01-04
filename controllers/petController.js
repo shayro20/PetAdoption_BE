@@ -1,36 +1,58 @@
-// const {v4: uuid} = require("uuid");
-// const {addPet, readAllPets, deletePet} = require("../models/petModels");
-const {v4: uuid} = require("uuid");
+const {
+  addPet,
+  petsSearcher,
+  petById,
+  updatePet,
+  adoptMyPet,
+} = require("../models/petModels");
 
-const {readAllPets, addPet} = require("../models/petModels");
-
-function searchPets(req, res) {
+async function searchPets(req, res) {
   try {
-    const allPets = readAllPets(req.query);
-    res.send(allPets);
+    const result = await petsSearcher(req, res, req.query);
+    res.send(result);
   } catch (error) {
     console.log(error);
   }
 }
 
-// function petDelete(req, res) {
-//   const {petId} = req.params;
-//   const deleted = deletePet(petId);
-//   if (deleted) {
-//     res.send({ok: true, deleted: petId});
-//   }
-// }
-
-function newPet(req, res) {
+async function newPet(req, res) {
   try {
-    const {name, type} = req.body;
-    const newPet = {name, type, id: uuid(), date: new Date()};
-
-    const petAdded = addPet(newPet);
-    if (petAdded) res.send(newPet);
+    const result = await addPet(req, res);
+    res.send(result);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
   }
 }
-module.exports = {searchPets, newPet};
+
+async function idPet(req, res) {
+  try {
+    const result = await petById(req, res);
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
+
+async function editPet(req, res) {
+  try {
+    const result = await updatePet(req);
+    res.send("done");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
+async function adoptPet(req, res) {
+  console.log(req.body.adoptionStatus)
+  try {
+    const result = await adoptMyPet(req);
+    res.send(req.body.adoptionStatus)
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+}
+
+module.exports = {searchPets, newPet, idPet, editPet, adoptPet};
