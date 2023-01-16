@@ -4,7 +4,7 @@ const userController = require("../controllers/userControler");
 const validateBody = require("../validate/validate");
 const {signUpSchema} = require("../schema/userSchema");
 
-const {cryptPass, isUser} = require("../middleware/userMid");
+const {cryptPass} = require("../middleware/userMid");
 
 router.post("/", validateBody(signUpSchema), cryptPass, (req, res) =>
   userController.signUp(req, res)

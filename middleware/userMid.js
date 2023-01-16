@@ -20,20 +20,20 @@ async function isUserExist(req, res, next) {
   try {
     const user = await checkMail(req);
     console.log("zero");
-    if (user.length===0) {
+    if (user.length === 0) {
       console.log("first");
-      res.status(500).send("no such user");
+      res.status(500).send("invalid username");
       return;
-    } else {console.log("second")
+    } else {
+      console.log("second");
       req.body.user = user;
       console.log(req.body.user);
       next();
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 }
-
-
-
-
 
 module.exports = {cryptPass, isUserExist};

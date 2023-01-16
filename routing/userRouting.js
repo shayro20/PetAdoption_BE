@@ -1,15 +1,17 @@
 const express = require("express");
-const {v4: uuid} = require("uuid");
+const userController = require("../controllers/userControler");
+const {authAdmin, auth} = require("../tokenmiddelware/tokengen");
+const validate = require("../validate/validate");
+const {editUserSchema} = require("../schema/userSchema");
 
 const router = express.Router();
 
-router.get("/")
+router.get("/", authAdmin, userController.getAllUsers);
 
-router.get("/user/:id")
+router.get("/:id", userController.getUserById);
 
-router.put("/user/:id")
+router.put("/:id", auth, userController.updateUser);
 
-router.get("/user/:id:full")
-
+// router.get("/:id:full");---- no need for that api i called it from a diffferent way
 
 module.exports = router;

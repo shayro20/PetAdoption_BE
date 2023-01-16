@@ -1,5 +1,6 @@
 const cloudinary = require("cloudinary").v2;
 const {CloudinaryStorage} = require("multer-storage-cloudinary");
+const multer = require("multer");
 
 cloudinary.config({
   cloud_name: "dohaqe6nc",
@@ -19,3 +20,28 @@ const storage = new CloudinaryStorage({
 });
 
 const upload = multer({storage: storage});
+
+const valueModifier = (req, res, next) => {
+  console.log("did i got here?",console.log(req.body))
+ 
+  if (req.body.hypoallergenic === "true") {
+    req.body.hypoallergenic = req.body.hypoallergenic === "true";
+  } else {
+    req.body.hypoallergenic = req.body.hypoallergenic === null;
+  }
+  req.body.height = Number(req.body.height);
+  req.body.weight = Number(req.body.weight);
+  next();
+};
+
+const picModifier = (req, res, next) => {
+  if (req.file) {
+    req.body.picture = req.file.path;
+    next();
+  } else {
+    next();
+  }
+};
+
+
+module.exports = {upload, valueModifier, picModifier};

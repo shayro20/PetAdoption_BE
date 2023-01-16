@@ -18,7 +18,6 @@ app.use(cors({origin: ["http://localhost:3000"], credentials: true}));
 
 // app.use("/*")
 
-
 app.use("/pets", petsPath);
 app.use("/user", userPath);
 app.use("/signup", signupPath);
@@ -29,7 +28,6 @@ app.use("/verify", verifyPath);
 //   console.log(err);
 //   res.status(err.statusCode).send(err.message);
 // });
-
 
 dbConnection.migrate
   .latest()

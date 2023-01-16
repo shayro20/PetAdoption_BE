@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.string("firstName").notNull();
     table.string("lastName").notNull();
     table.string("phone").notNull();
-    table.json("owned pets");
+    table.string("bio");
     table.timestamp("created_at").defaultTo(knex.fn.now());
   });
 };

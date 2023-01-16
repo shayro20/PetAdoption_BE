@@ -19,7 +19,8 @@ const schema = {
     diet: {type: "string"},
   },
 
-  additionalProperties: true,
+  additionalProperties: false,
 };
-ajv.compile(schema);
+
+
 module.exports = schema;
