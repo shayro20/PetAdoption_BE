@@ -11,7 +11,7 @@ async function petsSearcher(req, res, searchParams) {
     weight = defaultSizeObj,
   } = searchParams;
   if (type === "") {
-    (type = "Dog"), "Cat", "Other";
+    type = "Dog", "Cat", "Other";
   }
   let search = await dbConnection
     .from("pets")

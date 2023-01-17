@@ -36,6 +36,7 @@ async function auth(req, res, next) {
     } else if (decoded.id) {
       if (Object.keys(req.params).length !== 0) {
         console.log(req.params, "whattttt");
+        req.body.id = decoded.id;
         next();
       } else {
         req.body.id = decoded.id;
